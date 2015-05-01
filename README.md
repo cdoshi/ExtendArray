@@ -1,5 +1,5 @@
 # ExtendArray
-Perform basic matrix operations using JavaScript.
+Tiny library (< 9Kb) to perform basic matrix operations using JavaScript.
 Download the repo and open index.html to see it in action
 ## Usage
 Include it in your application using following syntax
