@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Extend Array properties</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="left" id="leftCont"></div>    
+            <div class="right" id="rightCont"></div>    
+        </div>
+        
+    </body>
+    
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        function init() {
+            var a = [[1,2,3],[4,5,6],[7,8,9]], 
+                b = [[4,3,2],[-3,2,1],[6,-7,4]],
+                str='', str1='';
+            str  += '// A simple cheatsheet on how to use the library<br>'; 
+            str  += 'Refer for further reference<br><br>';
+            str1 += '<br><br><br>';
+            
+            str  += 'var a = ' + ExtendArray.print(a) + ';<br>';
+            str1 += '<br>';
+            str  += 'var b = ' + ExtendArray.print(b) + ';<br><br>';
+            str1 += '<br><br>';
+            
+            
+            str  += 'ExtendArray.dimensions(a)<br>';
+            str1 += '// ' + ExtendArray.print(ExtendArray.dimensions(a)) + '<br>';
+            
+            str  += 'ExtendArray.transpose(a) <br>';
+            str1 += '// ' + ExtendArray.print(ExtendArray.transpose(a)) + '<br>';
+            
+            str  += '<br>// Initialize an array <br>';
+            str1 += '<br>// Supports ones,zeros, rands, undefined<br>';
+            
+            str  += 'ExtendArray.initialize([3,3],"ones") <br>';
+            str1 += '// ' + ExtendArray.print(ExtendArray.initialize([3,3],'ones')) + '<br>';
+            
+            
+            str  += 'ExtendArray.crossProduct(a,b)<br>';
+            str1 += '// ' + ExtendArray.print(ExtendArray.crossProduct(a,b)) + '<br>';
+            
+            str  += '<br>// Perform element by element operation by another array <br>';
+            str1 += '<br>// Supports multiply, divide, add, subtract<br>';
+            
+            str  += 'ExtendArray.dotOperation(a,b,"multiply")<br>';
+            str1 += '// ' + ExtendArray.print(ExtendArray.dotOperation(a,b,'multiply')) + '<br>';
+            
+            str  += '<br>// Perform element by element operation by a number or itself <br>';
+            str1 += '<br>// Supports multiply, divide, add, subtract, abs, sqrt, power, ... <br>';
+            
+            str  += 'ExtendArray.scalarOperation(a,"add",5)<br>';
+            str1 += '// ' + ExtendArray.print(ExtendArray.scalarOperation(a,'add',5)) + '<br>';
+            
+            str  += 'ExtendArray.scalarOperation(b,"abs")<br>';
+            str1 += '// ' + ExtendArray.print(ExtendArray.scalarOperation(b,'abs')) + '<br>';
+            
+            str  += '<br>// Compute basic statistics. Use "vertical" for columnwise operation<br>';
+            str1 += '<br>// Supports mean, max, min, absmax, absmin, popstd,samstd,add <br>';
+            
+            str  += 'ExtendArray.stat(a,"mean")<br>';
+            str1 += '// ' + ExtendArray.print(ExtendArray.stat(a,'mean')) + '<br>';
+            
+            str  += 'ExtendArray.stat(a,"mean","vertical")<br>';
+            str1 += '// ' + ExtendArray.print(ExtendArray.stat(a,'mean','vertical')) + '<br>';
+            
+            str  += '<br>// Find subset of an array<br>';
+            str1 += '<br><br>';
+            
+            str  += 'ExtendArray.subset(a,[":",[1 2]])<br>';
+            str1 += '// ' + ExtendArray.print(ExtendArray.subset(a,[":",[1,2]])) + '<br>';
+            str  += 'ExtendArray.subset(a,[[0,2],[1 2]])<br>';
+            str1 += '// ' + ExtendArray.print(ExtendArray.subset(a,[[0,2],[1,2]])) + '<br>';
+            
+            str  += '<br>// Determine indices to be looped for an array<br>';
+            str1 += '<br><br>';
+            
+            str  += 'ExtendArray.serialIndex(0,10,1)<br>';
+            str1 += '// ' + ExtendArray.print(ExtendArray.serialIndex(0,10,1)) + '<br>';
+            str  += 'ExtendArray.serialIndex(0,10,2)<br>';
+            str1 += '// ' + ExtendArray.print(ExtendArray.serialIndex(0,10,2)) + '<br>';
+            str  += 'ExtendArray.serialIndex(0,10,1,[4,5])<br>';
+            str1 += '// ' + ExtendArray.print(ExtendArray.serialIndex(0,10,1,[4,5])) + '<br>';
+            
+            str  += '<br>// Compute determinant,inverse,...<br>';
+            str1 += '<br><br>';
+            
+            str  += 'ExtendArray.determinant(b)<br>';
+            str1 += '// ' + ExtendArray.determinant(b) + '<br>';
+            
+            str  += 'ExtendArray.inverse(b)<br>';
+            str1 += '<br>';
+            
+            str  += 'ExtendArray.pseudoinverse(b)<br>';
+            str1 += '<br>';
+            
+            str  += 'ExtendArray.adjoint(b)<br>';
+            str1 += '<br>';
+            
+            str  += '<br>// Print an array <br>';
+            str1 += '<br><br>';
+            
+            str  += 'ExtendArray.print(b)<br>';
+            str1 += '// ' + ExtendArray.print(b) + '<br>';
+            
+            
+            document.getElementById('leftCont').innerHTML = str;
+            document.getElementById('rightCont').innerHTML = str1;
+            
+            
+        }
+        
+        window.onload = init;
+    </script>
+    <script type="text/javascript" src="js/extendArray.min.js"></script>
+</html>

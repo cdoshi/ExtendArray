@@ -1,0 +1,23 @@
+
+.container {
+    width: 100%;
+    overflow:hidden;
+    whitespace:nowrap;
+    max-width:100%;
+}
+.left {
+    width: 50%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    -ms-text-overflow:ellipsis;
+    float: left;
+    position:absolute;
+    max-width:inherit;
+}
+.right {
+    width: 50%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    -ms-text-overflow:ellipsis;
+    float:right;
+}
