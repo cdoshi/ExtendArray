@@ -122,16 +122,18 @@ THE SOFTWARE.
         
         
         // Get dimensions of array
-        ExtendArray.dimensions = function (arr) {
-            if(arr === undefined) return [];
-            if(arr.length === 0) return 0;
-            if(!this.checkArray(arr)) return false;
+        ExtendArray.dimensions = function (arr,check) {
+            if(check === undefined) {
+                if(arr === undefined) return [];
+                if(arr.length === 0) return 0;
+                if(!this.checkArray(arr)) return false;
+            }
             var depth = [];
             // Base Case
             if(arr[0].length === undefined) return [arr.length];
             
             // Recursive Case
-            else depth = depth.concat(arr.length,this.dimensions(arr[0]));
+            else depth = depth.concat(arr.length,this.dimensions(arr[0],false));
             
                         
             return depth;
@@ -170,10 +172,13 @@ THE SOFTWARE.
         };
         
         // Computes transpose of the array. Supports only upto 2D
-        ExtendArray.transpose = function(arr,newarr) {
-            if(arr === undefined || arr.length === 0) return [];
-            if(!this.checkArray(arr)) return false;
-            if(newarr === undefined) newarr=[];
+        ExtendArray.transpose = function(arr,newarr,check) {
+            
+            if(check === undefined) {
+                if(arr === undefined || arr.length === 0) return [];
+                if(!this.checkArray(arr)) return false;
+                if(newarr === undefined) newarr=[];
+            }
             
             var size = this.dimensions(arr),
                 dim,
@@ -198,7 +203,7 @@ THE SOFTWARE.
             else {
                 dim = size.shift();
                 for(i = 0; i < dim; i++) 
-                    newarr = this.transpose(arr[i],newarr);
+                    newarr = this.transpose(arr[i],newarr,false);
             }
              
             return newarr;  
@@ -207,9 +212,7 @@ THE SOFTWARE.
         // Compute cross product
         ExtendArray.crossProduct = function(arr,arr1,check) {
             
-            if(check === undefined) check = true;
-            
-            if(check) {
+            if(check === undefined) {
                 if(arr === undefined || arr1 === undefined) return [];
                 if(!this.checkArray(arr) || !this.checkArray(arr1)) return false;
             }
@@ -262,12 +265,15 @@ THE SOFTWARE.
         };
         
         // Perform element by element operation. Either add, subtract, multiply or divide
-        ExtendArray.dotOperation = function(arr,arr1,type) {
-            if(arr === undefined || arr1 === undefined || type === undefined) return [];
-            if(!this.checkArray(arr) || !this.checkArray(arr1)) return false;
-            if(!checkDimensions.bind(this,arr,arr1)()) {
-                console.error('Arrays must be of same dimensions');
-                return false;
+        ExtendArray.dotOperation = function(arr,arr1,type,check) {
+            
+            if(check === undefined) {
+                if(arr === undefined || arr1 === undefined || type === undefined) return [];
+                if(!this.checkArray(arr) || !this.checkArray(arr1)) return false;
+                if(!checkDimensions.bind(this,arr,arr1)()) {
+                    console.error('Arrays must be of same dimensions');
+                    return false;
+                }
             }
             
             if(type !== 'add' && 
@@ -296,7 +302,7 @@ THE SOFTWARE.
             // Recursive Case
             else {
                 dim = size.shift();
-                for(var i = 0;i < dim;i++) newarr[i] = this.dotOperation(arr[i],arr1[i],type);
+                for(var i = 0;i < dim;i++) newarr[i] = this.dotOperation(arr[i],arr1[i],type,false);
             }
              
             return newarr;  
@@ -306,9 +312,8 @@ THE SOFTWARE.
         // Perform element by element operation with a scalar. Either add, subtract, multiply,divide, absolute value
         ExtendArray.scalarOperation = function(arr,operation,num,check) {
             if(arr === undefined || operation === undefined) return [];
-            if(check === undefined) check = true;
             
-            if(check) {
+            if(check === undefined) {
                 if(operation !== 'add' && 
                    operation !== 'subtract' && 
                    operation !== 'multiply' && 
@@ -378,18 +383,21 @@ THE SOFTWARE.
         };
         
         // Compute mean of a[0][0],a[0][1], ..., a[0][n] elements of array. 
-        ExtendArray.stat = function(arr, operation,type) {
-            if(arr === undefined) return [];
-            if(!this.checkArray(arr)) return false;
-            if(operation !== 'mean' 
-               && operation !== 'max' 
-               && operation !== 'min'
-               && operation !== 'popstd'
-               && operation !== 'samstd'
-               && operation !== 'absmax'
-               && operation !== 'absmin'
-               && operation !== 'add') return false;
-            if(type === undefined) type = 'horizontal';
+        ExtendArray.stat = function(arr, operation,type,check) {
+            
+            if(check === undefined) {
+                if(arr === undefined) return [];
+                if(!this.checkArray(arr)) return false;
+                if(operation !== 'mean' 
+                   && operation !== 'max' 
+                   && operation !== 'min'
+                   && operation !== 'popstd'
+                   && operation !== 'samstd'
+                   && operation !== 'absmax'
+                   && operation !== 'absmin'
+                   && operation !== 'add') return false;
+                if(type === undefined) type = 'horizontal';
+            }
             
             if(type === 'vertical') {
                 var arr1 = ExtendArray.transpose(arr);
@@ -439,14 +447,17 @@ THE SOFTWARE.
             // Recursive Case
             else {
                 dim = size.shift();
-                for(var i = 0;i < dim;i++) newarr[i] = this.stat(arr[i],operation);
+                for(var i = 0;i < dim;i++) newarr[i] = this.stat(arr[i],operation,false);
             }
             return newarr;  
         };
         
-        ExtendArray.subset = function(arr, index) {
-            if(arr === undefined) return [];
-            if(!this.checkArray(arr) && !this.checkArray(index)) return false;
+        ExtendArray.subset = function(arr, index,check) {
+            
+            if(check === undefined) {
+                if(arr === undefined) return [];
+                if(!this.checkArray(arr) && !this.checkArray(index)) return false;
+            }
             
             var size = this.dimensions(arr),
                 newarr = [],    
@@ -479,7 +490,7 @@ THE SOFTWARE.
             // Recursive Case
             else {
                 for(var i = 0;i < dim;i++) 
-                    newarr[i] = this.subset(arr[index[0][i]],index.slice(1));
+                    newarr[i] = this.subset(arr[index[0][i]],index.slice(1),false);
             }
              
             return newarr;  

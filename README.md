@@ -1,5 +1,5 @@
 # ExtendArray
-Tiny library (< 9Kb) to perform basic and complex mathematical array operations using JavaScript.
+Tiny library (~ 8Kb) to perform basic and complex mathematical array operations using JavaScript.
 Download the repo and open index.html to see it in action
 ## Usage
 Include it in your application using following syntax
