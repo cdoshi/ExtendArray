@@ -1,5 +1,5 @@
 # ExtendArray
-Tiny library (~ 8Kb) to perform basic and complex mathematical array operations using JavaScript.
+Tiny library (~ 10Kb) to perform basic and complex mathematical array operations using JavaScript.
 Download the repo and open index.html to see it in action
 ## Usage
 Include it in your application using following syntax
@@ -17,6 +17,8 @@ Unless expicitly mentioned, the functions work for any higher dimensional array 
 - stat(arr, operation, type). Perform basic statistics on rows of the array. operation can take values 'mean','max','min','absmax','absmin','popstd','samstd','add'. Use type 'vertical' when operations need to be performed on the columns. stat(arr,'mean') will compute mean of all numbers in each row of an array while stat(arr,'mean','vertical') will compute mean of columns. Use 'max' when need the maximum value (takes sign into account) and 'absmax' when need absolute maximum (considers only magnitude). 'popstd' is population standard deviation and 'samstd' is sample standard deviation. 'add' adds all elements in the row. 
 - subset(arr,dimensions). Obtain subset of an array provided by dimensions. dimensions is an array. See example section below
 - serialIndex(startInd,lastInd,jump,exclude). Construct an array with startInd (number) as first value,lastInd (number) as last value, jump (number) is increment value, exlude (array) are numbers you do not want to include in array. This function can be very useful in looping constructs
+- serialize(arr). Convert N dimensional array to 1D array. 
+- reshape(arr,index,jump). Reshape the array based on index array provided. Use jump when values you want to group are not in consecutive order. For eg. jump can be used when you are receiving data from multiple channels in a serial fashion. Check example below.
 - crossProduct(arr, arr1). Compute cross product of two arrays. Supports upto 2D.
 - determinant(arr). Compute determinant of array. The array has to be a 2D square matrix. TODO - way to calculate determinant of big 2D arrays (> 60 x 60)
 - inverse(arr). Compute inverse of an array.The array has to be a 2D square non-singular matrix. 
@@ -27,11 +29,15 @@ Unless expicitly mentioned, the functions work for any higher dimensional array 
 ## Examples
 ```javascript
 var a = [[1,2,3],[6,3,2],[2,1,2]];
+var b = [1,2,3,4,5,6,7,8,9,10,11,12];
 ExtendArray.initialize([3,3],'ones');      // Initializes 3x3 array filled with ones
-ExtendArray.dimensions(a);                // Get dimensions of the array
-ExtendArray.transpose(a);                // Transpose the array
-ExtendArray.subset(a,[':',[0,1]]);      // Subset will have all rows of a and first and second column of a
-ExtendArray.serialIndex(0,10,2,[4,5]); // [0,2,6,8,10]
+ExtendArray.dimensions(a);                 // Get dimensions of the array
+ExtendArray.transpose(a);                  // Transpose the array
+ExtendArray.subset(a,[':',[0,1]]);         // Subset will have all rows of a and first and second column of a
+ExtendArray.serialIndex(0,10,2,[4,5]);     // [0,2,6,8,10]
+ExtendArray.reshape(b,[6,2]);              // [[1,2],[3,4],[5,6],[7,8],[9,10],[11,12]]
+ExtendArray.reshape(b,[6,2],1);            // [[1,7],[2,8],[3,9],[4,10],[5,11],[6,12]]
+
 ```
 Combine multiple operations to perform complex operations
 ```javascript
