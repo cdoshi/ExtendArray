@@ -712,7 +712,7 @@ THE SOFTWARE.
                 
                 if(size.length > 1) arr = this.serialize(arr);
                 
-                if(jump === undefined) jump = 1; // Consecutive
+                if(jump === undefined) jump = 0; // Consecutive
                 else if(total%jump) {
                     console.error('Cannot reshape with this jump value');
                     return false;
@@ -734,8 +734,8 @@ THE SOFTWARE.
                 arr1 = this.subset(arr1,[this.serialIndex(1,arr1.length-1)]);
                 
                 for(var i = 0;i < firstDim;i++) {
-                    if(jump === 1)
-                        newarr.push(this.reshape(this.subset(arr,[this.serialIndex(i*rem,0,jump,[],rem)]),arr1,jump,false))
+                    if(jump === 0)
+                        newarr.push(this.reshape(this.subset(arr,[this.serialIndex(i*rem,0,1,[],rem)]),arr1,jump,false))
                     else
                         newarr.push(this.reshape(this.subset(arr,[this.serialIndex(i,0,firstDim,[],rem)]),arr1,jump,false))
                 }
