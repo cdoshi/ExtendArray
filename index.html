@@ -16,6 +16,7 @@
         function init() {
             var a = [[1,2,3],[4,5,6],[7,8,9]], 
                 b = [[4,3,2],[-3,2,1],[6,-7,4]],
+                c = [1,2,3,4,5,6,7,8,9,10,11,12]
                 str='', str1='';
             str  += '// A simple cheatsheet on how to use the library<br>'; 
             str  += 'Refer for further reference<br><br>';
@@ -23,7 +24,9 @@
             
             str  += 'var a = ' + ExtendArray.print(a) + ';<br>';
             str1 += '<br>';
-            str  += 'var b = ' + ExtendArray.print(b) + ';<br><br>';
+            str  += 'var b = ' + ExtendArray.print(b) + ';<br>';
+            str1 += '<br>';
+            str  += 'var c = ' + ExtendArray.print(c) + ';<br><br>';
             str1 += '<br><br>';
             
             
@@ -85,6 +88,14 @@
             str  += 'ExtendArray.serialIndex(0,10,1,[4,5])<br>';
             str1 += '// ' + ExtendArray.print(ExtendArray.serialIndex(0,10,1,[4,5])) + '<br>';
             
+            str  += '<br>// Reshape the array <br>';
+            str1 += '<br><br>';
+            str  += 'ExtendArray.reshape(c,[6,2])<br>';
+            str1 += '// ' + ExtendArray.print(ExtendArray.reshape(c,[6,2])) + '<br>';
+            str  += 'ExtendArray.reshape(c,[6,2],2)<br>';
+            str1 += '// ' + ExtendArray.print(ExtendArray.reshape(c,[6,2],2)) + '<br>';
+            
+            
             str  += '<br>// Compute determinant,inverse,...<br>';
             str1 += '<br><br>';
             
@@ -115,5 +126,5 @@
         
         window.onload = init;
     </script>
-    <script type="text/javascript" src="js/extendArray.min.js"></script>
+    <script type="text/javascript" src="js/extendArray.js"></script>
 </html>

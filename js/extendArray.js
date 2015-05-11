@@ -395,7 +395,8 @@ THE SOFTWARE.
                    && operation !== 'samstd'
                    && operation !== 'absmax'
                    && operation !== 'absmin'
-                   && operation !== 'add') return false;
+                   && operation !== 'add'
+                   && operation !== 'multiply') return false;
                 if(type === undefined) type = 'horizontal';
             }
             
@@ -434,6 +435,11 @@ THE SOFTWARE.
                     for(var i = 0;i < els;i++) sum += arr[i];
                     newarr[0] = sum;
                 }
+                else if(operation === 'multiply') {
+                    var sum = 1;
+                    for(var i = 0;i < els;i++) sum *= arr[i];
+                    newarr[0] = sum;
+                }
                 else if(operation === 'popstd') {
                     var avg = this.stat(arr,'mean');
                     newarr[0] = Math.sqrt(this.stat(this.power(this.scalarOperation(arr,'subtract',this.stat(arr,'mean')[0]),2),'add')[0]/els);
@@ -452,7 +458,7 @@ THE SOFTWARE.
             return newarr;  
         };
         
-        ExtendArray.subset = function(arr, index,check) {
+        ExtendArray.subset = function(arr, index, check) {
             
             if(check === undefined) {
                 if(arr === undefined) return [];
@@ -562,27 +568,30 @@ THE SOFTWARE.
             return det;
         };
         
-        ExtendArray.serialIndex = function(startInd,endInd,jump,exclude) {
+        ExtendArray.serialIndex = function(startInd,endInd,jump,exclude,tot) {
             if(jump === undefined) jump = 1;
             if(exclude === undefined) exclude = [];
             if(!this.checkArray(exclude)) {
                 console.error('exclude argument is an array');
                 return false;
             }
+            if(tot === undefined) tot = 0;
             
             var newarr = [],
                 temp = -1,
-                check = false;
+                check = false,
+                i = startInd;
             
             if (exclude.length !== 0) check = true;
-        
-            for(var i = startInd,l=0;i <= endInd;i = i + jump) {
+            
+            while(i <= endInd || newarr.length < tot) {
                 
                 if(check) temp = exclude.indexOf(i); 
-                
                 if(temp === -1) newarr[newarr.length] = i;
-                    
+                i = i + jump;
+                
             }
+        
             return newarr;
         };
         
@@ -657,6 +666,81 @@ THE SOFTWARE.
             }
             
             return this.transpose(cofactors.bind(this,arr,size)());
+        };
+        
+        // Convert multidimesional array to 1D array
+        ExtendArray.serialize = function(arr, check) {
+            
+            if(check === undefined) check = true;
+            
+            if(check) {
+                if(arr === undefined) return [];
+                if(!this.checkArray(arr)) return false;
+            }
+            
+            var newarr = [],
+                size = this.dimensions(arr);
+            
+            // Base Case
+            if(size.length === 1) {
+                for(var i = 0;i < size;i++) newarr[i] = arr[i];
+            }
+            // Recursive Case
+            else {
+                var tot = size[0];
+                for(var i = 0;i < tot;i++) 
+                    newarr = newarr.concat(this.serialize(arr[i],false));
+            }
+            
+            return newarr;
+        };
+        
+        ExtendArray.reshape = function(arr, arr1, jump, check) {
+            if(check === undefined) check = true;
+            
+            if(check) {
+                if(arr === undefined) return [];
+                if(!(this.checkArray(arr) &&  this.checkArray(arr1))) return false;
+                
+                var size = this.dimensions(arr),
+                    total  = this.stat(size,'multiply')[0];
+                
+                if(total !== this.stat(arr1,'multiply')[0]) {
+                    console.error("Can't reshape " + this.print(size) + " array to " + this.print(arr1) + " array");
+                    return false;
+                }
+                
+                if(size.length > 1) arr = this.serialize(arr);
+                
+                if(jump === undefined) jump = 1; // Consecutive
+                else if(total%jump) {
+                    console.error('Cannot reshape with this jump value');
+                    return false;
+                }
+            }
+            
+            var newarr = [];
+            
+            // Base Case
+            if(arr1.length === 1) {
+                for(var i = 0;i < arr.length;i++) newarr[i] = arr[i];
+            }
+            // Recursive Case
+            else {
+                var firstDim = arr1[0],
+                    tot    = this.stat(arr1,'multiply')[0],
+                    rem = tot/firstDim;
+                
+                arr1 = this.subset(arr1,[this.serialIndex(1,arr1.length-1)]);
+                
+                for(var i = 0;i < firstDim;i++) {
+                    if(jump === 1)
+                        newarr.push(this.reshape(this.subset(arr,[this.serialIndex(i*rem,0,jump,[],rem)]),arr1,jump,false))
+                    else
+                        newarr.push(this.reshape(this.subset(arr,[this.serialIndex(i,0,firstDim,[],rem)]),arr1,jump,false))
+                }
+            }
+            return newarr;
         };
         
         ExtendArray.print = function(arr) {
