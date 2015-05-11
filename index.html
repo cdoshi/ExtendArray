@@ -31,7 +31,7 @@
           <h1>
 <a id="extendarray" class="anchor" href="#extendarray" aria-hidden="true"><span class="octicon octicon-link"></span></a>ExtendArray</h1>
 
-<p>Tiny library (~ 8Kb) to perform basic and complex mathematical array operations using JavaScript.
+<p>Tiny library (~ 10Kb) to perform basic and complex mathematical array operations using JavaScript.
 Download the repo and open index.html to see it in action</p>
 
 <h2>
@@ -54,6 +54,8 @@ Download the repo and open index.html to see it in action</p>
 <li>stat(arr, operation, type). Perform basic statistics on rows of the array. operation can take values 'mean','max','min','absmax','absmin','popstd','samstd','add'. Use type 'vertical' when operations need to be performed on the columns. stat(arr,'mean') will compute mean of all numbers in each row of an array while stat(arr,'mean','vertical') will compute mean of columns. Use 'max' when need the maximum value (takes sign into account) and 'absmax' when need absolute maximum (considers only magnitude). 'popstd' is population standard deviation and 'samstd' is sample standard deviation. 'add' adds all elements in the row. </li>
 <li>subset(arr,dimensions). Obtain subset of an array provided by dimensions. dimensions is an array. See example section below</li>
 <li>serialIndex(startInd,lastInd,jump,exclude). Construct an array with startInd (number) as first value,lastInd (number) as last value, jump (number) is increment value, exlude (array) are numbers you do not want to include in array. This function can be very useful in looping constructs</li>
+<li>serialize(arr). Convert N dimensional array to 1D array. </li>
+<li>reshape(arr,index,jump). Reshape the array based on index array provided. set jump to 1 when values you want to group values that are not in consecutive order. For eg. jump can be used when you are receiving data from multiple channels in a serial fashion. Check example below.</li>
 <li>crossProduct(arr, arr1). Compute cross product of two arrays. Supports upto 2D.</li>
 <li>determinant(arr). Compute determinant of array. The array has to be a 2D square matrix. TODO - way to calculate determinant of big 2D arrays (&gt; 60 x 60)</li>
 <li>inverse(arr). Compute inverse of an array.The array has to be a 2D square non-singular matrix. </li>
@@ -66,11 +68,15 @@ Download the repo and open index.html to see it in action</p>
 <a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
 
 <div class="highlight highlight-javascript"><pre><span class="pl-k">var</span> a <span class="pl-k">=</span> [[<span class="pl-c1">1</span>,<span class="pl-c1">2</span>,<span class="pl-c1">3</span>],[<span class="pl-c1">6</span>,<span class="pl-c1">3</span>,<span class="pl-c1">2</span>],[<span class="pl-c1">2</span>,<span class="pl-c1">1</span>,<span class="pl-c1">2</span>]];
+<span class="pl-k">var</span> b <span class="pl-k">=</span> [<span class="pl-c1">1</span>,<span class="pl-c1">2</span>,<span class="pl-c1">3</span>,<span class="pl-c1">4</span>,<span class="pl-c1">5</span>,<span class="pl-c1">6</span>,<span class="pl-c1">7</span>,<span class="pl-c1">8</span>,<span class="pl-c1">9</span>,<span class="pl-c1">10</span>,<span class="pl-c1">11</span>,<span class="pl-c1">12</span>];
 ExtendArray.initialize([<span class="pl-c1">3</span>,<span class="pl-c1">3</span>],<span class="pl-s"><span class="pl-pds">'</span>ones<span class="pl-pds">'</span></span>);      <span class="pl-c">// Initializes 3x3 array filled with ones</span>
-ExtendArray.dimensions(a);                <span class="pl-c">// Get dimensions of the array</span>
-ExtendArray.transpose(a);                <span class="pl-c">// Transpose the array</span>
-ExtendArray.subset(a,[<span class="pl-s"><span class="pl-pds">'</span>:<span class="pl-pds">'</span></span>,[<span class="pl-c1">0</span>,<span class="pl-c1">1</span>]]);      <span class="pl-c">// Subset will have all rows of a and first and second column of a</span>
-ExtendArray.serialIndex(<span class="pl-c1">0</span>,<span class="pl-c1">10</span>,<span class="pl-c1">2</span>,[<span class="pl-c1">4</span>,<span class="pl-c1">5</span>]); <span class="pl-c">// [0,2,6,8,10]</span></pre></div>
+ExtendArray.dimensions(a);                 <span class="pl-c">// Get dimensions of the array</span>
+ExtendArray.transpose(a);                  <span class="pl-c">// Transpose the array</span>
+ExtendArray.subset(a,[<span class="pl-s"><span class="pl-pds">'</span>:<span class="pl-pds">'</span></span>,[<span class="pl-c1">0</span>,<span class="pl-c1">1</span>]]);         <span class="pl-c">// Subset will have all rows of a and first and second column of a</span>
+ExtendArray.serialIndex(<span class="pl-c1">0</span>,<span class="pl-c1">10</span>,<span class="pl-c1">2</span>,[<span class="pl-c1">4</span>,<span class="pl-c1">5</span>]);     <span class="pl-c">// [0,2,6,8,10]</span>
+ExtendArray.reshape(b,[<span class="pl-c1">6</span>,<span class="pl-c1">2</span>]);              <span class="pl-c">// [[1,2],[3,4],[5,6],[7,8],[9,10],[11,12]]</span>
+ExtendArray.reshape(b,[<span class="pl-c1">6</span>,<span class="pl-c1">2</span>],<span class="pl-c1">1</span>);            <span class="pl-c">// [[1,7],[2,8],[3,9],[4,10],[5,11],[6,12]]</span>
+</pre></div>
 
 <p>Combine multiple operations to perform complex operations</p>
 
