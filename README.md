@@ -18,7 +18,7 @@ Unless expicitly mentioned, the functions work for any higher dimensional array 
 - subset(arr,dimensions). Obtain subset of an array provided by dimensions. dimensions is an array. See example section below
 - serialIndex(startInd,lastInd,jump,exclude). Construct an array with startInd (number) as first value,lastInd (number) as last value, jump (number) is increment value, exlude (array) are numbers you do not want to include in array. This function can be very useful in looping constructs
 - serialize(arr). Convert N dimensional array to 1D array. 
-- reshape(arr,index,jump). Reshape the array based on index array provided. Use jump when values you want to group are not in consecutive order. For eg. jump can be used when you are receiving data from multiple channels in a serial fashion. Check example below.
+- reshape(arr,index,jump). Reshape the array based on index array provided. set jump to 1 when values you want to group values that are not in consecutive order. For eg. jump can be used when you are receiving data from multiple channels in a serial fashion. Check example below.
 - crossProduct(arr, arr1). Compute cross product of two arrays. Supports upto 2D.
 - determinant(arr). Compute determinant of array. The array has to be a 2D square matrix. TODO - way to calculate determinant of big 2D arrays (> 60 x 60)
 - inverse(arr). Compute inverse of an array.The array has to be a 2D square non-singular matrix. 
