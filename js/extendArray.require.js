@@ -6,6 +6,9 @@ define(function (require) {
     // Function that will return 1D array, used for initializing
 =======
         // Function that will return 1D array, used for initializing
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
     var fill = function fill(dim, type,value) {
         var arr = [], i;
