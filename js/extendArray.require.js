@@ -2,7 +2,11 @@ define(function (require) {
 
     "use strict";
 
+<<<<<<< HEAD
     // Function that will return 1D array, used for initializing
+=======
+        // Function that will return 1D array, used for initializing
+>>>>>>> origin/master
     var fill = function fill(dim, type,value) {
         var arr = [], i;
         for (i = 0; i < dim; i++) {
