@@ -761,7 +761,7 @@ THE SOFTWARE.
                 str += '[';
                 for(var i = 0;i < rows;i++) {
                     str += '[';
-                    for(var j = 0;j < cols;j++) {
+                    for(var j = 0;j < cols;j++) { 
                         if( j === cols - 1) 
                             str += arr[i][j];
                         else 
